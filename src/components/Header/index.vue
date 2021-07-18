@@ -6,6 +6,12 @@
         <div class="menu__item">List</div>
         <div class="menu__item">FAQ</div>
       </div>
+      <div class="user">
+        <el-avatar :size="24" :src="circleUrl" class="avatar"></el-avatar>
+        <span class="user__name">
+          ToanHN
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -23,6 +29,7 @@ export default {
   height: 120px;
   max-width: 1280px;
   padding: 16px 0;
+  display: flex;
 
   .logo {
     color: white;
@@ -37,6 +44,20 @@ export default {
     &__item {
       display: inline-block;
       margin-right: 32px;
+      color: white;
+      font-size: 0.9em;
+    }
+  }
+
+  .user {
+    margin-left: auto;
+
+    .avatar {
+      vertical-align: middle;
+    }
+
+    &__name {
+      margin-left: 4px;
       color: white;
       font-size: 0.9em;
     }

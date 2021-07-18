@@ -8,16 +8,12 @@
       </div>
 
       <div class="kol">
-        <div class="kol__item">
-          <el-skeleton />
-        </div>
-        <div class="kol__item">
-          <el-skeleton />
-        </div>
-        <div class="kol__item">
-          <el-skeleton />
-        </div>
-        <div class="kol__item">
+        <div
+          class="kol__item"
+          v-for="(i, index) in Array(10).fill()"
+          :key="index"
+        >
+          <el-avatar :size="48" :src="circleUrl" class="avatar"></el-avatar>
           <el-skeleton />
         </div>
       </div>
@@ -83,6 +79,10 @@ $primary: #cc473b;
     margin: 8px;
     height: 240px;
     width: calc(33.33% - 16px);
+
+    .avatar {
+      margin-bottom: 8px;
+    }
   }
 }
 </style>
