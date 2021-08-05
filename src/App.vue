@@ -1,19 +1,17 @@
 <template>
   <Header />
   <div class="main">
-    <Influencer />
+    <router-view />
   </div>
 </template>
 
 <script>
 import Header from "./components/Header";
-import Influencer from "./components/Influencer";
 
 export default {
   name: "App",
   components: {
     Header,
-    Influencer,
   },
 };
 </script>
@@ -38,5 +36,6 @@ body {
 .main {
   margin: auto;
   max-width: 1280px;
+  padding: 16px;
 }
 </style>

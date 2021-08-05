@@ -3,7 +3,12 @@
     <div class="header">
       <div class="logo">INFLUENCER</div>
       <div class="menu">
-        <div class="menu__item">List</div>
+        <div class="menu__item">
+          <router-link to="/">Home</router-link>
+        </div>
+        <div class="menu__item">
+          <router-link to="/influencer">Influencer</router-link>
+        </div>
         <div class="menu__item">FAQ</div>
       </div>
       <div class="user">
@@ -42,10 +47,13 @@ export default {
   .menu {
     display: inline-block;
     &__item {
-      display: inline-block;
       margin-right: 32px;
-      color: white;
       font-size: 0.9em;
+      display: inline-block;
+      &, a {
+        color: white;
+        text-decoration: none;
+      }
     }
   }
 
@@ -65,6 +73,7 @@ export default {
 }
 
 .container {
+  padding: 16px 8px;
   background: rgb(255, 132, 103);
   background: linear-gradient(
     90deg,
