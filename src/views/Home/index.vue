@@ -8,7 +8,15 @@
       </div>
 
       <div class="body">
-        <el-input placeholder="Please input" v-model="input"></el-input>
+        <div class="actions">
+          <el-input
+            class="actions__input"
+            placeholder="Please input"
+            v-model="searchText"
+          ></el-input>
+          <el-button type="primary">Search</el-button>
+        </div>
+
         <div class="task-list">
           <div
             class="task-item"
@@ -33,6 +41,10 @@
 export default {
   name: "Header",
   props: {},
+
+  data: () => ({
+    searchText: "",
+  }),
 };
 </script>
 
@@ -95,6 +107,15 @@ $primary: #cc473b;
     &__progress {
       margin-top: 16px;
     }
+  }
+}
+
+.actions {
+  display: flex;
+
+  &__input {
+    max-width: 500px;
+    margin-right: 16px;
   }
 }
 </style>
