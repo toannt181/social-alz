@@ -14,19 +14,20 @@
             placeholder="Please input"
             v-model="searchText"
           ></el-input>
-          <el-button type="primary">Search</el-button>
+          <el-button type="primary" @click="onClickSearch">Search</el-button>
         </div>
 
         <div class="task-list">
           <div
             class="task-item"
-            v-for="(i, index) in Array(10).fill()"
+            v-for="(hashtag, index) in hashtags"
             :key="index"
           >
-            <div class="task-item__title">Task number 1</div>
+            <div class="task-item__title">Task number {{ hashtag.id }}</div>
+            <div class="task-item__desc">{{ hashtag.text }}</div>
             <el-skeleton />
             <el-progress
-              :percentage="50"
+              :percentage="hashtag.process || 0"
               class="task-item__progress"
               :stroke-width="12"
             ></el-progress>
@@ -38,13 +39,34 @@
 </template>
 
 <script>
+import * as HashtagApi from "@/api/Hashtag";
+
 export default {
   name: "Header",
   props: {},
 
   data: () => ({
     searchText: "",
+    hashtags: [],
   }),
+
+  created() {
+    this.fetchData();
+  },
+
+  methods: {
+    async fetchData() {
+      const result = await HashtagApi.fetchAll();
+      this.hashtags = result.data.data;
+    },
+
+    async onClickSearch() {
+      const payload = { text: this.searchText };
+      this.searchText = "";
+      await HashtagApi.create(payload);
+      this.fetchData();
+    },
+  },
 };
 </script>
 
@@ -95,12 +117,17 @@ $primary: #cc473b;
   margin-top: 32px;
 
   .task-item {
-    margin-bottom: 16px;
-    min-height: 320px;
+    margin-bottom: 32px;
 
     &__title {
       font-weight: bold;
       font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    &__desc {
+      font-weight: bold;
+      font-size: 16px;
       margin-bottom: 8px;
     }
 
