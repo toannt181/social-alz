@@ -25,9 +25,17 @@
           >
             <div class="task-item__title">Task number {{ hashtag.id }}</div>
             <div class="task-item__desc">{{ hashtag.text }}</div>
-            <el-skeleton />
+            <el-skeleton v-if="hashtag.status === 0" />
+            <template v-else>
+              <a :href="hashtag.snapshot?.data?.profile_pic_url" target="_blank">
+                View profile
+              </a>
+              <code class="task-item__code">
+                {{ hashtag.snapshot }}
+              </code>
+            </template>
             <el-progress
-              :percentage="hashtag.process || 0"
+              :percentage="hashtag.status === 0 ? 0 : 100"
               class="task-item__progress"
               :stroke-width="12"
             ></el-progress>
@@ -133,6 +141,14 @@ $primary: #cc473b;
 
     &__progress {
       margin-top: 16px;
+    }
+
+    &__code {
+      max-height: 200px;
+      overflow: auto;
+      display: block;
+      white-space: break-spaces;
+      word-break: break-word;
     }
   }
 }
