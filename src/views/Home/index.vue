@@ -27,12 +27,35 @@
             <div class="task-item__desc">{{ hashtag.text }}</div>
             <el-skeleton v-if="hashtag.status === 0" />
             <template v-else>
-              <a :href="hashtag.snapshot?.data?.profile_pic_url" target="_blank">
+              <a
+                :href="hashtag.snapshot?.data?.profile_pic_url"
+                target="_blank"
+              >
                 View profile
               </a>
-              <code class="task-item__code">
+              <!-- <code class="task-item__code">
                 {{ hashtag.snapshot }}
-              </code>
+              </code> -->
+              <div class="assets">
+                <div
+                  v-for="mediaAsset in hashtag.mediaAssets"
+                  :key="mediaAsset.id"
+                  class="assets__item"
+                >
+                  <el-card>
+                    <img :src="mediaAsset.url" class="image" />
+                    <div>
+                      <!-- <span>Yummy hamburger</span>
+                      <div class="bottom clearfix">
+                        <time class="time">{{ currentDate }}</time>
+                        <el-button type="text" class="button"
+                          >Operating</el-button
+                        >
+                      </div> -->
+                    </div>
+                  </el-card>
+                </div>
+              </div>
             </template>
             <el-progress
               :percentage="hashtag.status === 0 ? 0 : 100"
@@ -159,6 +182,18 @@ $primary: #cc473b;
   &__input {
     max-width: 500px;
     margin-right: 16px;
+  }
+}
+
+.assets {
+  display: flex;
+  flex-wrap: wrap;
+  &__item {
+    width: 20%;
+
+    img {
+      width: 100%;
+    }
   }
 }
 </style>
