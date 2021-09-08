@@ -9,59 +9,44 @@
 
       <div class="body">
         <div class="actions">
-          <el-input
-            class="actions__input"
-            placeholder="Please input"
-            v-model="searchText"
-          ></el-input>
+          <el-input class="actions__input" placeholder="Please input" v-model="searchText"></el-input>
           <el-button type="primary" @click="onClickSearch">Search</el-button>
         </div>
 
         <div class="task-list">
-          <div
-            class="task-item"
-            v-for="(hashtag, index) in hashtags"
-            :key="index"
-          >
+          <div class="task-item" v-for="(hashtag, index) in hashtags" :key="index">
             <div class="task-item__title">Task number {{ hashtag.id }}</div>
-            <div class="task-item__desc">{{ hashtag.text }}</div>
+            <div class="task-item__desc">
+              {{ hashtag.text }}
+              <el-tag type="info" v-if="hashtag.status === 0">Inprogress</el-tag>
+              <el-tag type="success" v-if="hashtag.status !== 0">Complete</el-tag>
+            </div>
+            <!-- <el-progress
+              :percentage="hashtag.status === 0 ? 0 : 100"
+              class="task-item__progress"
+              :stroke-width="12"
+            /> -->
             <el-skeleton v-if="hashtag.status === 0" />
             <template v-else>
-              <a
+              <!-- <a
                 :href="hashtag.snapshot?.data?.profile_pic_url"
                 target="_blank"
               >
                 View profile
-              </a>
+              </a> -->
               <!-- <code class="task-item__code">
                 {{ hashtag.snapshot }}
               </code> -->
               <div class="assets">
-                <div
-                  v-for="mediaAsset in hashtag.mediaAssets"
-                  :key="mediaAsset.id"
-                  class="assets__item"
-                >
-                  <el-card>
-                    <img :src="mediaAsset.url" class="image" />
-                    <div>
-                      <!-- <span>Yummy hamburger</span>
-                      <div class="bottom clearfix">
-                        <time class="time">{{ currentDate }}</time>
-                        <el-button type="text" class="button"
-                          >Operating</el-button
-                        >
-                      </div> -->
-                    </div>
-                  </el-card>
+                <div class="assets__item" v-if="hashtag.mediaAssets.length === 0" />
+                <div v-for="mediaAsset in hashtag.mediaAssets" :key="mediaAsset.id" class="assets__item">
+                  <img :src="mediaAsset.url" class="image" />
+                  <div class="assets__caption">
+                    {{ mediaAsset.accessibilityCaption }}
+                  </div>
                 </div>
               </div>
             </template>
-            <el-progress
-              :percentage="hashtag.status === 0 ? 0 : 100"
-              class="task-item__progress"
-              :stroke-width="12"
-            ></el-progress>
           </div>
         </div>
       </div>
@@ -71,6 +56,7 @@
 
 <script>
 import * as HashtagApi from "@/api/Hashtag";
+// import Colcade from "colcade";
 
 export default {
   name: "Header",
@@ -78,11 +64,15 @@ export default {
 
   data: () => ({
     searchText: "",
-    hashtags: [],
+    hashtags: []
   }),
 
-  created() {
+  mounted() {
     this.fetchData();
+    // new Colcade(".assets", {
+    //   columns: ".grid-col",
+    //   items: ".assets__item",
+    // });
   },
 
   methods: {
@@ -96,13 +86,14 @@ export default {
       this.searchText = "";
       await HashtagApi.create(payload);
       this.fetchData();
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 $primary: #cc473b;
+$white: #fff;
 
 .wrapper {
   display: flex;
@@ -152,8 +143,9 @@ $primary: #cc473b;
 
     &__title {
       font-weight: bold;
-      font-size: 14px;
+      font-size: 18px;
       margin-bottom: 8px;
+      text-transform: uppercase;
     }
 
     &__desc {
@@ -186,14 +178,27 @@ $primary: #cc473b;
 }
 
 .assets {
+  margin: 0 -30px;
+  padding: 0 15px;
+  /* display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: masonry; */
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
+  img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  }
   &__item {
-    width: 20%;
-
-    img {
-      width: 100%;
-    }
+    width: calc(33.33% - 30px);
+    margin: 15px;
+    border-radius: 12px;
+    /* background: $white; */
+  }
+  &__caption {
+    margin-top: 4px;
   }
 }
 </style>
