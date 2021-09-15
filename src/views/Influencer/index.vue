@@ -1,21 +1,14 @@
 <template>
-  <div class="wrapper">
-    <div class="nav"><el-skeleton /></div>
-    <div class="content">
-      <div class="tab">
-        <div class="tab__item active">Active</div>
-        <div class="tab__item">Registered</div>
-      </div>
+  <div class="content">
+    <div class="tab">
+      <div class="tab__item active">Active</div>
+      <div class="tab__item">Registered</div>
+    </div>
 
-      <div class="kol">
-        <div
-          class="kol__item"
-          v-for="(i, index) in Array(10).fill()"
-          :key="index"
-        >
-          <el-avatar :size="48" :src="circleUrl" class="avatar"></el-avatar>
-          <el-skeleton />
-        </div>
+    <div class="kol">
+      <div class="kol__item" v-for="(i, index) in Array(10).fill()" :key="index">
+        <el-avatar :size="48" :src="circleUrl" class="avatar"></el-avatar>
+        <el-skeleton />
       </div>
     </div>
   </div>
@@ -23,29 +16,13 @@
 
 <script>
 export default {
-  name: "Header",
-  props: {},
+  name: "Influencer",
+  props: {}
 };
 </script>
 
 <style lang="scss" scoped>
 $primary: #cc473b;
-
-.wrapper {
-  display: flex;
-
-  .nav {
-    margin-top: 16px;
-    margin-right: 16px;
-    width: 240px;
-    flex: 0 0 240px;
-  }
-
-  .content {
-    margin-top: -64px;
-    flex: 1;
-  }
-}
 
 .tab {
   &__item {

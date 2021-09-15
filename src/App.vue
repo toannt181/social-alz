@@ -1,22 +1,23 @@
 <template>
-  <Header />
   <div class="main">
-    <router-view />
+    <Sidebar />
+    <div class="content">
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script>
-import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
 
 export default {
   name: "App",
   components: {
-    Header,
-  },
+    Sidebar
+  }
 };
 </script>
-
-<style>
+<style lang="scss">
 * {
   box-sizing: border-box;
 }
@@ -32,10 +33,12 @@ body {
   color: #2c3e50;
   background: #f6f8fa;
 }
+</style>
 
-.main {
-  margin: auto;
-  max-width: 1280px;
-  padding: 16px;
+<style lang="scss" scoped>
+.content {
+  margin-left: $width-sidebar;
+  background: $primary2;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 </style>

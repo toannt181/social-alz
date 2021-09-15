@@ -1,55 +1,48 @@
 <template>
-  <div class="wrapper">
-    <div class="nav"><el-skeleton /></div>
-    <div class="content">
-      <div class="tab">
-        <div class="tab__item active">Active</div>
-        <div class="tab__item">Registered</div>
+  <div class="tab">
+    <div class="tab__item active">Active</div>
+    <div class="tab__item">Registered</div>
+  </div>
+
+  <div class="actions">
+    <el-input class="actions__input" placeholder="Please input" v-model="searchText"></el-input>
+    <el-button type="primary" @click="onClickSearch">Search</el-button>
+  </div>
+
+  <div class="task-list">
+    <div class="task-item" v-for="(hashtag, index) in hashtags" :key="index">
+      <div class="task-item__title">Task number {{ hashtag.id }}</div>
+      <div class="task-item__desc">
+        {{ hashtag.text }}
+        <el-tag type="info" v-if="hashtag.status === 0">Inprogress</el-tag>
+        <el-tag type="success" v-if="hashtag.status !== 0">Complete</el-tag>
       </div>
-
-      <div class="body">
-        <div class="actions">
-          <el-input class="actions__input" placeholder="Please input" v-model="searchText"></el-input>
-          <el-button type="primary" @click="onClickSearch">Search</el-button>
-        </div>
-
-        <div class="task-list">
-          <div class="task-item" v-for="(hashtag, index) in hashtags" :key="index">
-            <div class="task-item__title">Task number {{ hashtag.id }}</div>
-            <div class="task-item__desc">
-              {{ hashtag.text }}
-              <el-tag type="info" v-if="hashtag.status === 0">Inprogress</el-tag>
-              <el-tag type="success" v-if="hashtag.status !== 0">Complete</el-tag>
-            </div>
-            <!-- <el-progress
+      <!-- <el-progress
               :percentage="hashtag.status === 0 ? 0 : 100"
               class="task-item__progress"
               :stroke-width="12"
             /> -->
-            <el-skeleton v-if="hashtag.status === 0" />
-            <template v-else>
-              <!-- <a
+      <el-skeleton v-if="hashtag.status === 0" />
+      <template v-else>
+        <!-- <a
                 :href="hashtag.snapshot?.data?.profile_pic_url"
                 target="_blank"
               >
                 View profile
               </a> -->
-              <!-- <code class="task-item__code">
+        <!-- <code class="task-item__code">
                 {{ hashtag.snapshot }}
               </code> -->
-              <div class="assets">
-                <div class="assets__item" v-if="hashtag.mediaAssets.length === 0" />
-                <div v-for="mediaAsset in hashtag.mediaAssets" :key="mediaAsset.id" class="assets__item">
-                  <img :src="mediaAsset.url" class="image" />
-                  <div class="assets__caption">
-                    {{ mediaAsset.accessibilityCaption }}
-                  </div>
-                </div>
-              </div>
-            </template>
+        <div class="assets">
+          <div class="assets__item" v-if="hashtag.mediaAssets.length === 0" />
+          <div v-for="mediaAsset in hashtag.mediaAssets" :key="mediaAsset.id" class="assets__item">
+            <img :src="mediaAsset.url" class="image" />
+            <div class="assets__caption">
+              {{ mediaAsset.accessibilityCaption }}
+            </div>
           </div>
         </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>
@@ -93,24 +86,6 @@ export default {
 
 <style lang="scss" scoped>
 $primary: #cc473b;
-$white: #fff;
-
-.wrapper {
-  display: flex;
-
-  .nav {
-    margin-top: 16px;
-    margin-right: 16px;
-    width: 240px;
-    flex: 0 0 240px;
-  }
-
-  .content {
-    margin-top: -64px;
-    flex: 1;
-  }
-}
-
 .tab {
   &__item {
     cursor: pointer;
@@ -129,10 +104,6 @@ $white: #fff;
       background: #f8f8fa;
     }
   }
-}
-
-.body {
-  margin-top: 16px;
 }
 
 .task-list {
