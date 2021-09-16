@@ -60,6 +60,7 @@ export default {
   width: $width-sidebar;
   top: 0;
   left: 0;
+
   /* background: linear-gradient(90deg, rgba(255, 132, 103, 1) 35%, rgba(252, 89, 116, 1) 100%); */
 
   .logo {

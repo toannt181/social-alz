@@ -32,7 +32,6 @@ export default {
 body {
   font-size: 16px;
   color: $black-1;
-  background: #f6f8fa;
 }
 
 html,
@@ -45,9 +44,10 @@ body,
 
 <style lang="scss" scoped>
 .content {
+  @include radius-2;
   margin-left: $width-sidebar;
   background: $white-1;
   min-height: 100%;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px -7px 100px 0px;
 }
 </style>

@@ -25,3 +25,7 @@ $width-sidebar: 250px;
 @mixin radius-1 {
   border-radius: 8px;
 }
+
+@mixin radius-2 {
+  border-radius: 16px;
+}

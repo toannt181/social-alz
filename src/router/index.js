@@ -6,7 +6,7 @@ import Hashtag from "../views/Hashtag";
 const routes = [
   {
     path: "/",
-    name: "Home",
+    name: "Dashboard",
     component: Home
   },
   {
