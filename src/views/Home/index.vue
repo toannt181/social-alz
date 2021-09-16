@@ -23,7 +23,8 @@
         <div class="task-item__desc">
           {{ hashtag.text }}
           <el-tag type="info" v-if="hashtag.status === 0">Inprogress</el-tag>
-          <el-tag type="success" v-if="hashtag.status !== 0">Complete</el-tag>
+          <el-tag type="success" v-if="hashtag.status === 1">Complete</el-tag>
+          <el-tag type="error" v-if="hashtag.status === 2">Fail</el-tag>
         </div>
         <el-skeleton v-if="hashtag.status === 0" />
       </div>

@@ -6,7 +6,8 @@
       <div class="task-item__desc">
         {{ hashtag.text }}
         <el-tag type="info" v-if="hashtag.status === 0">Inprogress</el-tag>
-        <el-tag type="success" v-if="hashtag.status !== 0">Complete</el-tag>
+        <el-tag type="success" v-if="hashtag.status === 1">Complete</el-tag>
+        <el-tag type="error" v-if="hashtag.status === 2">Fail</el-tag>
       </div>
       <el-skeleton v-if="hashtag.status === 0" />
       <template v-else>
@@ -32,7 +33,6 @@
 
 <script>
 import * as HashtagApi from "@/api/Hashtag";
-// import Colcade from "colcade";
 
 export default {
   name: "Header",
@@ -52,12 +52,7 @@ export default {
       this.hashtag = result.data.data;
     },
 
-    async onClickSearch() {
-      const payload = { text: this.searchText };
-      this.searchText = "";
-      await HashtagApi.create(payload);
-      this.fetchData();
-    }
+    mountLayout() {}
   }
 };
 </script>
@@ -132,9 +127,6 @@ export default {
 .assets {
   margin: 0 -30px;
   padding: 0 15px;
-  /* display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: masonry; */
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -147,7 +139,6 @@ export default {
     width: calc(33.33% - 30px);
     margin: 15px;
     border-radius: 12px;
-    /* background: $white; */
   }
   &__caption {
     margin-top: 4px;

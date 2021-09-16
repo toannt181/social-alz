@@ -13,6 +13,7 @@
     "colcade": "^0.2.0",
     "core-js": "^3.6.5",
     "element-plus": "^1.1.0-beta.12",
+    "isotope-layout": "^3.0.6",
     "magic-grid": "^3.2.4",
     "masonry-layout": "^4.2.2",
     "normalize.css": "^8.0.1",
