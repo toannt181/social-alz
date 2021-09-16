@@ -1,9 +1,27 @@
 $white: #ffffff;
-$primary1: #282a34;
+$black: #000000;
+$primary-1: #409eff;
 $primary2: #3c3f51;
 $red1: #e2336b;
 $orange1: #fcac46;
 
-$white-1: #e6e6e6;
+$white-1: #f3f8ff;
+
+$black-1: #2e3f6f;
+
+$transparent-1: #ffffffaa;
 
 $width-sidebar: 250px;
+
+@mixin box-shadow-1 {
+  box-shadow: rgba(149, 157, 165, 0.15) 0px 6px 18px;
+  transition: box-shadow 0.25s;
+
+  &:hover {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 48px;
+  }
+}
+
+@mixin radius-1 {
+  border-radius: 8px;
+}

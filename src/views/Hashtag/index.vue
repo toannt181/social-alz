@@ -1,48 +1,45 @@
 <template>
-  <div class="container">
-    <!-- <div class="tab">
-    <div class="tab__item active">Active</div>
-    <div class="tab__item">Registered</div>
-  </div> -->
-
-    <h1>Task Queue</h1>
-
-    <div class="actions">
-      <el-input class="actions__input" placeholder="Please input" v-model="searchText"></el-input>
-      <el-button type="primary" @click="onClickSearch">Search</el-button>
-    </div>
+  <div class="container" v-if="hashtag">
+    <h1>Task ID #{{ hashtag.id }}</h1>
 
     <div class="task-list">
-      <div class="task-item" v-for="(hashtag, index) in hashtags" :key="index" @click="viewHashtag(hashtag.id)">
-        <div class="task-item__title">Task ID #{{ hashtag.id }}</div>
-        <div class="task-item__icon">
-          <el-icon>
-            <arrow-right-bold />
-          </el-icon>
-        </div>
-        <div class="task-item__desc">
-          {{ hashtag.text }}
-          <el-tag type="info" v-if="hashtag.status === 0">Inprogress</el-tag>
-          <el-tag type="success" v-if="hashtag.status !== 0">Complete</el-tag>
-        </div>
-        <el-skeleton v-if="hashtag.status === 0" />
+      <div class="task-item__desc">
+        {{ hashtag.text }}
+        <el-tag type="info" v-if="hashtag.status === 0">Inprogress</el-tag>
+        <el-tag type="success" v-if="hashtag.status !== 0">Complete</el-tag>
       </div>
+      <el-skeleton v-if="hashtag.status === 0" />
+      <template v-else>
+        <div class="assets">
+          <div class="assets__item" v-if="hashtag.mediaAssets.length === 0" />
+          <div v-for="mediaAsset in hashtag.mediaAssets" :key="mediaAsset.id" class="assets__item">
+            <img :src="mediaAsset.url" class="image" />
+            <div class="assets__caption">
+              {{ mediaAsset.accessibilityCaption }}
+            </div>
+          </div>
+        </div>
+      </template>
     </div>
+  </div>
+  <div class="container" v-else>
+    <el-skeleton :rows="5" animated style="width: 240px" />
+    <el-skeleton animated style="margin-top: 40px">
+      <el-skeleton-item variant="button" style="width: 240px; height: 240px;" />
+    </el-skeleton>
   </div>
 </template>
 
 <script>
 import * as HashtagApi from "@/api/Hashtag";
-import { ArrowRightBold } from "@element-plus/icons";
 // import Colcade from "colcade";
 
 export default {
   name: "Header",
-  components: { ArrowRightBold },
+  props: {},
 
   data: () => ({
-    searchText: "",
-    hashtags: []
+    hashtag: null
   }),
 
   mounted() {
@@ -51,8 +48,8 @@ export default {
 
   methods: {
     async fetchData() {
-      const result = await HashtagApi.fetchAll();
-      this.hashtags = result.data.data;
+      const result = await HashtagApi.fetchId(this.$route.params.id);
+      this.hashtag = result.data.data;
     },
 
     async onClickSearch() {
@@ -60,10 +57,6 @@ export default {
       this.searchText = "";
       await HashtagApi.create(payload);
       this.fetchData();
-    },
-
-    viewHashtag(id) {
-      this.$router.push({ name: "Hashtag", params: { id } });
     }
   }
 };
@@ -98,13 +91,7 @@ export default {
   margin-top: 32px;
 
   .task-item {
-    @include box-shadow-1;
-    @include radius-1;
-    background: $transparent-1;
     margin-bottom: 32px;
-    padding: 24px;
-    cursor: pointer;
-    position: relative;
 
     &__title {
       font-weight: bold;
@@ -129,13 +116,6 @@ export default {
       display: block;
       white-space: break-spaces;
       word-break: break-word;
-    }
-
-    &__icon {
-      position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
     }
   }
 }

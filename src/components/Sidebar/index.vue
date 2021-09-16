@@ -2,13 +2,6 @@
   <div class="sidebar">
     <div class="logo">INFLUENCER</div>
 
-    <div class="user">
-      <el-avatar :size="24" :src="circleUrl" class="avatar"></el-avatar>
-      <span class="user__name">
-        ToanHN
-      </span>
-    </div>
-
     <div class="menu">
       <div class="menu__item" v-for="(item, i) in menu" :key="i">
         <router-link :to="item.link">
@@ -18,6 +11,13 @@
           {{ item.name }}
         </router-link>
       </div>
+    </div>
+
+    <div class="user">
+      <el-avatar :size="48" :src="circleUrl" class="avatar"></el-avatar>
+      <span class="user__name">
+        ToanHN
+      </span>
     </div>
   </div>
 </template>
@@ -55,8 +55,8 @@ export default {
   margin: auto;
   height: 100%;
   padding: 32px 0;
-  background: $white-1;
-  position: absolute;
+  background: $white;
+  position: fixed;
   width: $width-sidebar;
   top: 0;
   left: 0;
@@ -65,26 +65,30 @@ export default {
   .logo {
     text-align: center;
     color: white;
-    font-weight: bold;
     font-size: 24px;
     width: 240px;
     display: inline-block;
+    color: $primary-1;
+    font-weight: 900;
   }
 
   .menu {
     margin-top: 24px;
     &__item {
-      margin-right: 32px;
+      @include box-shadow-1;
+      @include radius-1;
+      margin: 16px;
       font-size: 18px;
-      padding-left: 16px;
+      padding: 12px 20px;
       margin-bottom: 16px;
       &,
       a {
-        color: $white;
+        color: $black-1;
         text-decoration: none;
       }
 
       i {
+        color: $primary-1;
         vertical-align: middle;
         margin-right: 12px;
         display: inline;
@@ -93,8 +97,7 @@ export default {
   }
 
   .user {
-    margin-left: 16px;
-    margin-top: 24px;
+    margin: 48px 32px;
 
     .avatar {
       vertical-align: middle;
@@ -102,8 +105,7 @@ export default {
 
     &__name {
       margin-left: 4px;
-      color: white;
-      font-size: 0.9em;
+      font-size: 16px;
     }
   }
 }
