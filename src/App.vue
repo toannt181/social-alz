@@ -14,6 +14,14 @@ export default {
   name: "App",
   components: {
     Sidebar
+  },
+  mounted() {
+    this.$socket.on("connect", () =>
+      this.$notify({
+        title: "Server connected",
+        type: "success"
+      })
+    );
   }
 };
 </script>

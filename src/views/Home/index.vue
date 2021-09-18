@@ -10,6 +10,7 @@
     <div class="actions">
       <el-input class="actions__input" placeholder="Please input" v-model="searchText"></el-input>
       <el-button type="primary" @click="onClickSearch">Search</el-button>
+      <el-button type="primary" @click="onReload">Reload</el-button>
     </div>
 
     <div class="task-list">
@@ -48,12 +49,23 @@ export default {
 
   mounted() {
     this.fetchData();
+    this.$socket.emit("hashtag:join", null);
+    this.$socket.on("hashtag:updated", this.onHashtagSocketUpdated);
+  },
+
+  unmounted() {
+    this.$socket.emit("hashtag:leave", null);
+    this.$socket.off("hashtag:updated", this.onHashtagSocketUpdated);
   },
 
   methods: {
     async fetchData() {
       const result = await HashtagApi.fetchAll();
       this.hashtags = result.data.data;
+    },
+
+    async onReload() {
+      this.fetchData();
     },
 
     async onClickSearch() {
@@ -65,6 +77,14 @@ export default {
 
     viewHashtag(id) {
       this.$router.push({ name: "Hashtag", params: { id } });
+    },
+
+    onHashtagSocketUpdated() {
+      this.$notify({
+        title: "Hashtag: Get data complete",
+        message: "Reload to get new data",
+        type: "success"
+      });
     }
   }
 };
